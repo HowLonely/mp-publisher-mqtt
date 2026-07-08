@@ -1,0 +1,13 @@
+services:
+  casella_service:
+    build: .
+    container_name: casella_modbus_mqtt
+    restart: unless-stopped
+    devices:
+      # Crucial: permite que el contenedor lea el RS485
+      - "/dev/ttyUSB:/dev/ttyUSB0"
+    volumes:
+      # Persistir el archivo de pendientes para no perder datos si se reinicia
+      - ./pendientes:/root/casella_pending
+      # Persistir el archivo Log en la raspberrypi
+      / ./logs:/app/logs
